@@ -58,8 +58,8 @@ const Card = ({ item, updateBookmarks }) => {
         <h2 className="text-base sm:text-lg font-semibold line-clamp-1">
           {item.title}
         </h2>
-        <p className="text-sm text-gray-500">📅 {formatDate(item.release_date)}</p>
-        <p className="text-sm text-yellow-500">⭐ {item.vote_average.toFixed(1)}</p>
+        <p className="text-sm text-gray-500">{formatDate(item.release_date)}</p>
+        <p className="text-sm text-yellow-500">{item.vote_average.toFixed(1)}</p>
       </div>
     </div>
   );
