@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { IoIosStarOutline } from "react-icons/io";
 
 const Card = ({ item, updateBookmarks }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/movie/${item.id}`);
+  };
   const url = import.meta.env.VITE_IMAGE_URL;
   const [isBookmarked, setIsBookmarked] = useState(false);
 
@@ -25,18 +31,21 @@ const Card = ({ item, updateBookmarks }) => {
       localStorage.setItem("bookmarks", JSON.stringify(updated));
       setIsBookmarked(false);
       toast.error("Удалено из Избранного");
-      updateBookmarks(updated); 
+      updateBookmarks(updated);
     } else {
       const updated = [...bookmarks, item];
       localStorage.setItem("bookmarks", JSON.stringify(updated));
       setIsBookmarked(true);
       toast.success("Добавлено в Избранное");
-      updateBookmarks(updated); 
+      updateBookmarks(updated);
     }
   };
 
   return (
-    <div className="p-3 rounded-xl shadow-md bg-[#1D1D1D] hover:shadow-xl transition-shadow duration-300 relative">
+    <div
+      onClick={handleClick}
+      className="p-3 rounded-xl shadow-md bg-[#1D1D1D] hover:shadow-xl transition-shadow duration-300 relative"
+    >
       <div className="overflow-hidden rounded-lg relative group">
         <img
           src={`${url}${item.poster_path}`}
@@ -45,11 +54,16 @@ const Card = ({ item, updateBookmarks }) => {
         />
 
         <div
-          onClick={toggleBookmark}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleBookmark();
+          }}
           className="absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
         >
           <CiBookmark
-            className={`text-2xl ${isBookmarked ? "text-yellow-400" : "text-white"}`}
+            className={`text-2xl ${
+              isBookmarked ? "text-yellow-400 " : "text-white"
+            }`}
           />
         </div>
       </div>
@@ -59,7 +73,10 @@ const Card = ({ item, updateBookmarks }) => {
           {item.title}
         </h2>
         <p className="text-sm text-gray-500">{formatDate(item.release_date)}</p>
-        <p className="text-sm text-yellow-500">{item.vote_average.toFixed(1)}</p>
+         <div className="flex items-center gap-1 text-sm text-yellow-500">
+          <IoIosStarOutline className="text-yellow-300" />
+          <p>{item.vote_average.toFixed(1)}</p>
+        </div>
       </div>
     </div>
   );

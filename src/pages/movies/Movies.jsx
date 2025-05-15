@@ -1,9 +1,25 @@
-import React from 'react'
+// import Genres from '@/components/genres/Genres'
+import MovieView from "@/components/movie-view/MovieView";
+import { useFetch } from "@/hooks/useFatch";
+import React, { useEffect, useState } from "react";
 
 const Movies = () => {
-  return (
-    <div>Movies</div>
-  )
-}
+  const [genre, setGenre] = useState("");
+  const { data, error, loading } = useFetch("/discover/movie", {
+    page: 1,
+    with_genres: genre,
+    without_genres: "18,10749,36",
+  });
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-export default Movies
+  return (
+    <div>
+      {/* <Genres setGenre={setGenre}/> */}
+      <MovieView movies={data?.results} />
+    </div>
+  );
+};
+
+export default Movies;

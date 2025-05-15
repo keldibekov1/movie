@@ -1,24 +1,39 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "./logo.svg";
 import { SlHome } from "react-icons/sl";
 import { CiSearch, CiBookmark } from "react-icons/ci";
-import { MdMovie } from "react-icons/md";
+import { MdMovie, MdOutlineMovie } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
     { path: "/", label: "Афиша", icon: <SlHome className="text-2xl" /> },
-    { path: "/movies", label: "Сеансы", icon: <MdMovie className="text-2xl" /> },
-    { path: "/saved", label: "Избранное", icon: <CiBookmark className="text-2xl" /> },
-    { path: "/search", label: "Поиск", icon: <CiSearch className="text-2xl" /> },
+    {
+      path: "/movies",
+      label: "Сеансы",
+      icon: <MdOutlineMovie className="text-2xl" />,
+    },
+    {
+      path: "/saved",
+      label: "Избранное",
+      icon: <CiBookmark className="text-2xl" />,
+    },
+    {
+      path: "/search",
+      label: "Поиск",
+      icon: <CiSearch className="text-2xl" />,
+    },
   ];
-
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
   return (
-    <header className="bg-[#121212] text-white shadow-md">
+    <header className=" text-white shadow-md">
       <div className="container mx-auto flex items-center justify-between p-4">
         <NavLink to="/">
           <img className="h-10 object-cover" src={logo} alt="logo" />
@@ -42,7 +57,10 @@ const Header = () => {
         </div>
 
         <div className="hidden md:block mr-6">
-          <button className="w-[140px] h-[48px] bg-[#C61F1F] text-white rounded hover:bg-red-700 transition">
+          <button
+            onClick={handleLoginClick}
+            className="w-[140px] h-[48px] bg-[#C61F1F] text-white rounded hover:bg-red-700 transition"
+          >
             Login
           </button>
         </div>
@@ -77,7 +95,10 @@ const Header = () => {
               </NavLink>
             ))}
 
-            <button className="mt-2 w-full bg-[#C61F1F] h-[44px] rounded hover:bg-red-700 transition">
+            <button
+              className="mt-2 w-full bg-[#C61F1F] h-[44px] rounded hover:bg-red-700 transition"
+              onClick={handleLoginClick}
+            >
               Login
             </button>
           </div>
