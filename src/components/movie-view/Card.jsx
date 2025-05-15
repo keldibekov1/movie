@@ -46,27 +46,29 @@ const Card = ({ item, updateBookmarks }) => {
       onClick={handleClick}
       className="p-3 rounded-xl shadow-md bg-[#1D1D1D] hover:shadow-xl transition-shadow duration-300 relative"
     >
-      <div className="overflow-hidden rounded-lg relative group">
-        <img
-          src={`${url}${item.poster_path}`}
-          alt={item.title}
-          className="w-full h-[280px] sm:h-[320px] md:h-[360px] object-cover hover:scale-105 transition-transform duration-300"
-        />
+     <div className="overflow-hidden rounded-lg relative group" style={{ aspectRatio: "2 / 3", width: "100%" }}>
+  <img
+    src={`${url}${item.poster_path}`}
+    alt={item.title}
+    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+    loading="lazy"
+    onError={(e) => {
+      e.target.style.display = "none";
+    }}
+  />
+  <div
+    onClick={(e) => {
+      e.stopPropagation();
+      toggleBookmark();
+    }}
+    className="absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+  >
+    <CiBookmark
+      className={`text-2xl ${isBookmarked ? "text-yellow-400" : "text-white"}`}
+    />
+  </div>
+</div>
 
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleBookmark();
-          }}
-          className="absolute top-2 right-2 bg-black/50 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
-        >
-          <CiBookmark
-            className={`text-2xl ${
-              isBookmarked ? "text-yellow-400 " : "text-white"
-            }`}
-          />
-        </div>
-      </div>
 
       <div className="mt-3 space-y-1">
         <h2 className="text-base sm:text-lg font-semibold line-clamp-1">
