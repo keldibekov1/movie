@@ -16,7 +16,9 @@ const Saved = () => {
   return (
     <div className="container mx-auto px-4 py-6">
       {bookmarks.length === 0 ? (
-        <p className="text-gray-400">Not found.</p>
+        <div className="flex items-center justify-center h-screen">
+          <p className="text-gray-400">Not found.</p>
+        </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {bookmarks.map((item) => (
